@@ -13,32 +13,28 @@ public class HttpClient {
         Socket socket = new Socket(host, port);
 
         //request to server
-        String request = "GET " + requestTarget + "HTTP/1.1\r\n" +
+        String request = "GET " + requestTarget + " HTTP/1.1\r\n" +
                 "Host: " + host + "\r\n" +
                 "Connection: close\r\n"  + //sier til serveren at vi skal gjøre bare 1 requsest
                 "\r\n";
         socket.getOutputStream().write(request.getBytes());
 
         //skal lese og holde første linje i response headers
-        String[] statusLine = readLine(socket.getInputStream()).split(" ");
+        String[] statusLine = readLine(socket).split(" ");
         this.statusCode = Integer.parseInt(statusLine[1]);//tar imot value under index 1 i status
 
 
     }
 
-    private String readLine(InputStream in) throws IOException {
+    private String readLine(Socket socket) throws IOException {
         //skal bygge opp string gradvis
         StringBuilder result = new StringBuilder();
 
         //while det kommer på slutten av linje '\r'
         int c;
-        while ((c = in.read()) != -1 && c != '\r') {
-            result.append((char)c);
+        while ((c = socket.getInputStream().read()) != '\r') {
+            result.append((char) c);
         }
-        if (c == '\r') {
-            in.read();
-        }
-
 
         return result.toString();
     }

@@ -13,7 +13,7 @@ public class HttpClientTest {
                 new HttpClient("httpbin.org", 80, "/html")
                         .getStatusCode());
         assertEquals(404,
-                new HttpClient("httpbin.org", 80, "/html")
+                new HttpClient("httpbin.org", 80, "/non-existing")
                         .getStatusCode());
 
     }

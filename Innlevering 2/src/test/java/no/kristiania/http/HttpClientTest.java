@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class HttpClientTest {
@@ -31,5 +32,9 @@ public class HttpClientTest {
         assertEquals(3741, client.getContentLength());
     }
 
-
+    @Test
+    public void shouldReadMessageBody() throws IOException {
+        HttpClient client = new HttpClient("httpbin.org", 80, "/html");
+        assertTrue("Expected HTML: " + client.getMessageBody(), client.getMessageBody().startsWith("<!DOCTYPE html"));
+    }
 }

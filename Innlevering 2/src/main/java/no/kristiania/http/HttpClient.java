@@ -10,6 +10,7 @@ import java.util.Map;
 public class HttpClient {
     private final int statusCode;
     private final Map<String, String> headerFields = new HashMap<>();
+    private String messageBody;
 
     public HttpClient(String host, int port, String requestTarget) throws IOException {
 
@@ -34,6 +35,15 @@ public class HttpClient {
             headerFields.put(headerField, headerValue);
         }
 
+        this.messageBody = readBytes(socket, getContentLength());
+    }
+
+    private String readBytes(Socket socket, int contentLength) throws IOException {
+        StringBuilder buffer = new StringBuilder();
+        for (int i = 0; i < contentLength; i++) {
+            buffer.append((char)socket.getInputStream().read());
+        }
+        return buffer.toString();
     }
 
     private String readLine(Socket socket) throws IOException {
@@ -45,8 +55,9 @@ public class HttpClient {
         while ((c = socket.getInputStream().read()) != '\r') {
             result.append((char) c);
         }
-        socket.getInputStream().read();
 
+        int expectedNewline = socket.getInputStream().read();
+        assert expectedNewline == '\n';
         return result.toString();
     }
 
@@ -69,5 +80,9 @@ public class HttpClient {
     public int getContentLength() {
         int result = Integer.parseInt(getHeader("Content-Length"));
         return result;
+    }
+
+    public String getMessageBody() {
+        return messageBody;
     }
 }

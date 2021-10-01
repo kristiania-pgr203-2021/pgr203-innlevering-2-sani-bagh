@@ -1,4 +1,5 @@
 package no.kristiania.http;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -17,7 +18,7 @@ public class HttpClient {
         //request to server
         String request = "GET " + requestTarget + " HTTP/1.1\r\n" +
                 "Host: " + host + "\r\n" +
-                "Connection: close\r\n"  + //sier til serveren at vi skal gjøre bare 1 requsest
+                "Connection: close\r\n" + //sier til serveren at vi skal gjøre bare 1 requsest
                 "\r\n";
         socket.getOutputStream().write(request.getBytes());
 
@@ -29,7 +30,7 @@ public class HttpClient {
         while (!(headerLine = readLine(socket)).isBlank()) {
             int colonPos = headerLine.indexOf(':');
             String headerField = headerLine.substring(0, colonPos);
-            String headerValue = headerLine.substring(colonPos+1).trim();
+            String headerValue = headerLine.substring(colonPos + 1).trim();
             headerFields.put(headerField, headerValue);
         }
 
@@ -44,14 +45,15 @@ public class HttpClient {
         while ((c = socket.getInputStream().read()) != '\r') {
             result.append((char) c);
         }
-
         return result.toString();
     }
 
     public static void main(String[] args) throws IOException {
         HttpClient client = new HttpClient("httpbin.org", 80, "/html");
         System.out.println(client.getStatusCode());
-        System.out.println(client.getHeader("text/html; charset=utf-8"));
+        // System.out.println(client.getHeader("text/html; charset=utf-8"));
+
+
     }
 
     public int getStatusCode() {

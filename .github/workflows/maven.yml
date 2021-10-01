@@ -23,7 +23,7 @@ jobs:
           distribution: 'adopt'
           cache: 'maven'
       - name: Build with Maven
-        run: mvn --batch-mode package --file pom.xml --fail-at-end
+        run: mvn --batch-mode package --file Innlevering 2/pom.xml --fail-at-end
       - name: Publish test report
         uses: scacap/action-surefire-report@v1
         if: ${{ always() }}

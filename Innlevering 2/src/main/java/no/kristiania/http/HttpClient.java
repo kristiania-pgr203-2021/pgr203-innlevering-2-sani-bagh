@@ -1,12 +1,14 @@
 package no.kristiania.http;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.sql.PreparedStatement;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HttpClient {
     private final int statusCode;
+    private final Map<String, String> headerFields = new HashMap<>();
 
     public HttpClient(String host, int port, String requestTarget) throws IOException {
 
@@ -23,6 +25,13 @@ public class HttpClient {
         String[] statusLine = readLine(socket).split(" ");
         this.statusCode = Integer.parseInt(statusLine[1]);//tar imot value under index 1 i status
 
+        String headerLine;
+        while (!(headerLine = readLine(socket)).isBlank()) {
+            int colonPos = headerLine.indexOf(':');
+            String headerField = headerLine.substring(0, colonPos);
+            String headerValue = headerLine.substring(colonPos+1).trim();
+            headerFields.put(headerField, headerValue);
+        }
 
     }
 
@@ -42,13 +51,14 @@ public class HttpClient {
     public static void main(String[] args) throws IOException {
         HttpClient client = new HttpClient("httpbin.org", 80, "/html");
         System.out.println(client.getStatusCode());
+        System.out.println(client.getHeader("text/html; charset=utf-8"));
     }
 
     public int getStatusCode() {
         return statusCode;
     }
 
-    public String getHeader(String s) {
-        return null;
+    public String getHeader(String headerContent) {
+        return headerFields.get(headerContent);
     }
 }

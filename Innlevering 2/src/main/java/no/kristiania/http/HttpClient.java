@@ -45,13 +45,15 @@ public class HttpClient {
         while ((c = socket.getInputStream().read()) != '\r') {
             result.append((char) c);
         }
+        socket.getInputStream().read();
+
         return result.toString();
     }
 
     public static void main(String[] args) throws IOException {
         HttpClient client = new HttpClient("httpbin.org", 80, "/html");
         System.out.println(client.getStatusCode());
-        // System.out.println(client.getHeader("text/html; charset=utf-8"));
+        //System.out.println(client.getHeader("Content-Type"));
 
 
     }
@@ -60,7 +62,7 @@ public class HttpClient {
         return statusCode;
     }
 
-    public String getHeader(String headerContent) {
-        return headerFields.get(headerContent);
+    public String getHeader(String headerName) {
+        return headerFields.get(headerName);
     }
 }

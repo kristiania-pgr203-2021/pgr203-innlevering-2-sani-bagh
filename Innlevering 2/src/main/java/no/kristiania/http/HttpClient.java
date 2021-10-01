@@ -13,7 +13,7 @@ public class HttpClient {
     private String messageBody;
 
     public HttpClient(String host, int port, String requestTarget) throws IOException {
-
+        //oppretter connection to server
         Socket socket = new Socket(host, port);
 
         //request to server
@@ -21,13 +21,15 @@ public class HttpClient {
                 "Host: " + host + "\r\n" +
                 "Connection: close\r\n" + //sier til serveren at vi skal gjøre bare 1 requsest
                 "\r\n";
+        //getOutputStream er Socket sin property som clienten har
         socket.getOutputStream().write(request.getBytes());
 
-        //skal lese og holde første linje i response headers
-        String[] statusLine = readLine(socket).split(" ");
+        //skal lese tilbake første linje i response headers
+        String[] statusLine = readLine(socket).split(" ");//splitter opp status linjen
         this.statusCode = Integer.parseInt(statusLine[1]);//tar imot value under index 1 i status
 
         String headerLine;
+        //leser header linjene frem til det er blank
         while (!(headerLine = readLine(socket)).isBlank()) {
             int colonPos = headerLine.indexOf(':');
             String headerField = headerLine.substring(0, colonPos);
@@ -50,12 +52,13 @@ public class HttpClient {
         //skal bygge opp string gradvis
         StringBuilder result = new StringBuilder();
 
-        //while det kommer på slutten av linje '\r'
         int c;
+        //while det kommer på slutten av linje '\r'
         while ((c = socket.getInputStream().read()) != '\r') {
             result.append((char) c);
         }
 
+        //leser ny linje
         int expectedNewline = socket.getInputStream().read();
         assert expectedNewline == '\n';
         return result.toString();

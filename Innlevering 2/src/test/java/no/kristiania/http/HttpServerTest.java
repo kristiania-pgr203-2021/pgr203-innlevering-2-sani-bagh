@@ -50,6 +50,17 @@ public class HttpServerTest {
     }
 
     @Test
+    void shouldReturnContentType() throws IOException {
+
+        HttpClient client = new HttpClient("localhost", server.getPort(), "/hello");
+
+        assertAll(
+                () -> assertEquals(200, client.getStatusCode()),
+                () -> assertEquals("<p>Hello world</p>", client.getMessageBody())
+        );
+    }
+
+    @Test
     void shouldServeFiles() throws IOException {
         //når vi kjørerte den testen ble opprettet fil exapmle-file.txt
         server.setRoot(Paths.get("target/test-classes"));

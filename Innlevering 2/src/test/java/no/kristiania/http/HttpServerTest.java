@@ -34,4 +34,12 @@ public class HttpServerTest {
                 () -> assertEquals("<p>Hello world</p>", client.getMessageBody())
         );
     }
+
+    @Test
+    void shouldHandleMoreThanOneRequest() throws IOException {
+        HttpServer server = new HttpServer(0);
+
+        assertEquals(200, new HttpClient("localhost", server.getPort(), "/hello").getStatusCode());
+        assertEquals(200, new HttpClient("localhost", server.getPort(), "/hello").getStatusCode());
+    }
 }

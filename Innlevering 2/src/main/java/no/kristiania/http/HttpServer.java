@@ -56,27 +56,17 @@ public class HttpServer {
                 }
                 String responseText = "<p>Hello " + yourName + "</p>";
 
-                String response = "HTTP/1.1 200 OK\r\n" +
-                        "Content-Length: " + responseText.length() + "\r\n" +
-                        "Content-Type: text/html\r\n" +
-                        "\r\n" +
-                        responseText;
-                client.getOutputStream().write(response.getBytes());
+                writeOkResponse(client, responseText, "text/html");
             } else {
                 if (rootDirectory != null && Files.exists(rootDirectory.resolve(fileTarget.substring(1)))) {
+                    //leser innhold av file
                     String responseText = Files.readString(rootDirectory.resolve(fileTarget.substring(1)));
-
 
                     String contentType = "text/plain";
                     if (requestTarget.endsWith(".html")) {
                         contentType = "text/html";
                     }
-                    String response = "HTTP/1.1 200 OK\r\n" +
-                            "Content-Length: " + responseText.length() + "\r\n" +
-                            "Content-Type: " + contentType + "\r\n" +
-                            "\r\n" +
-                            responseText;
-                    client.getOutputStream().write(response.getBytes());
+                    writeOkResponse(client, responseText, contentType);
                     return;
                 }
 
@@ -89,6 +79,16 @@ public class HttpServer {
                         responseText;
                 client.getOutputStream().write(response.getBytes());
             }
+    }
+
+    private void writeOkResponse(Socket clientSocket, String responseText, String contentType) throws IOException {
+        String response = "HTTP/1.1 200 OK\r\n" +
+                "Content-Length: " + responseText.length() + "\r\n" +
+                "Content-Type:" + contentType + "\r\n" +
+                "Connection: close\r\n" +
+                "\r\n" +
+                responseText;
+        clientSocket.getOutputStream().write(response.getBytes());
     }
 
     public int getPort() {

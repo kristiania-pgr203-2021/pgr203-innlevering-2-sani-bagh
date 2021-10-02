@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class HttpServerTest {
 
 
-    private final HttpServer server = new HttpServer(0);
+    private final HttpServer server = new HttpServer(0);//port nummer 0 finner automatisk port nummere
 
     public HttpServerTest() throws IOException {
     }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HttpServerTest {
@@ -18,7 +19,19 @@ public class HttpServerTest {
     @Test
     void shouldRespondWithRequestTargetIn404() throws IOException {
         HttpServer server = new HttpServer(10004);
-        HttpClient client = new HttpClient("localhost", 10004, "/non-existing");
+        HttpClient client = new HttpClient("localhost", server.getPort(), "/non-existing");
         assertEquals("File not found: /non-existing", client.getMessageBody());
+    }
+
+    @Test
+    void shouldRespondWith200ForKnownRequestTarget() throws IOException {
+        HttpServer server = new HttpServer(10005);
+        HttpClient client = new HttpClient("localhost", server.getPort(), "/hello");
+
+        assertAll(
+                () -> assertEquals(200, client.getStatusCode()),
+                () -> assertEquals("text/html", client.getHeader("Content-Type")),
+                () -> assertEquals("<p>Hello world</p>", client.getMessageBody())
+        );
     }
 }

@@ -73,4 +73,15 @@ public class HttpServerTest {
         assertEquals("text/plain", client.getHeader("Content-Type"));
 
     }
+
+    @Test
+    void shouldUseFileExtensionForContentType() throws IOException {
+        server.setRoot(Paths.get("target/test-classes"));
+
+        String fileContent = "<p>Hello</p>";
+        Files.write(Path.of("target/test-classes/example-file.html"), fileContent.getBytes());
+
+        HttpClient client = new HttpClient("localhost", server.getPort(), "/example-file.html");
+        assertEquals("text/html", client.getHeader("Content-Type"));
+    }
 }

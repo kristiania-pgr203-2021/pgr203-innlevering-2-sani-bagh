@@ -56,6 +56,8 @@ public class HttpServer {
                 if (rootDirectory != null && Files.exists(rootDirectory.resolve(fileTarget.substring(1)))) {
                     String responseText = Files.readString(rootDirectory.resolve(fileTarget.substring(1)));
 
+                    //leser innhold av file
+
                     String contentType = "text/plain";
                     if (requestTarget.endsWith(".html")) {
                         contentType = "text/html";
@@ -85,6 +87,10 @@ public class HttpServer {
 
     public int getPort() {
         return serverSocket.getLocalPort();
+    }
+
+    public void setRoot(Path path) {
+
     }
 }
 

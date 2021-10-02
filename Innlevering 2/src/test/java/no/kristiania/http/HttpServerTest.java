@@ -3,6 +3,10 @@ package no.kristiania.http;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,5 +45,20 @@ public class HttpServerTest {
 
         assertEquals(200, new HttpClient("localhost", server.getPort(), "/hello").getStatusCode());
         assertEquals(200, new HttpClient("localhost", server.getPort(), "/hello").getStatusCode());
+    }
+
+    @Test
+    void shouldServeFiles() throws IOException {
+        //når vi kjørerte den testen ble opprettet fil exapmle-file.txt
+        HttpServer server = new HttpServer(0);
+        server.setRoot(Paths.get("target/test-classes"));
+
+        String fileContent = "A file created at " + LocalTime.now();
+        Files.write(Path.of("target/test-classes/example-file.txt"), fileContent.getBytes());
+
+        HttpClient client = new HttpClient("localhost", server.getPort(), "/example-file.txt");
+        assertEquals(fileContent, client.getMessageBody());
+        assertEquals("text/plain", client.getHeader("Content-Type"));
+
     }
 }

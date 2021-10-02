@@ -102,6 +102,7 @@ public class HttpServer {
 
 /*
     public static void main(String[] args) throws IOException {
+
         //klassen brukes for å lage server
         ServerSocket serverSocket = new ServerSocket(8080);
 

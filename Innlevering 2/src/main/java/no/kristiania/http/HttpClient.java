@@ -1,5 +1,4 @@
 package no.kristiania.http;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -48,7 +47,7 @@ public class HttpClient {
         return buffer.toString();
     }
 
-    private String readLine(Socket socket) throws IOException {
+    public static String readLine(Socket socket) throws IOException {
         //skal bygge opp string gradvis
         StringBuilder result = new StringBuilder();
 

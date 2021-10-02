@@ -33,7 +33,7 @@ public class HttpServer {
             //setter sammen klient og server i en socket
             Socket client = serverSocket.accept();
 
-            String[] requestLine = HttpClient.readLine(client).split(" ");
+            String[] requestLine = HttpMessage.readLine(client).split(" ");
             String requestTarget = requestLine[1];
 
             // indexOf() vil returnere -1 da den ikke finner indeksen til "?"

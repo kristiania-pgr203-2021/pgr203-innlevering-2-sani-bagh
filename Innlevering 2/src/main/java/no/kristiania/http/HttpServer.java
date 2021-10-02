@@ -17,9 +17,18 @@ public class HttpServer {
 
     }
 
-
     private void handleClients() {
         try {
+            while (true) {
+                handleClient();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void handleClient() throws IOException {
             //setter sammen klient og server i en socket
             Socket client = serverSocket.accept();
 
@@ -56,7 +65,6 @@ public class HttpServer {
                 if (rootDirectory != null && Files.exists(rootDirectory.resolve(fileTarget.substring(1)))) {
                     String responseText = Files.readString(rootDirectory.resolve(fileTarget.substring(1)));
 
-                    //leser innhold av file
 
                     String contentType = "text/plain";
                     if (requestTarget.endsWith(".html")) {
@@ -80,9 +88,6 @@ public class HttpServer {
                         responseText;
                 client.getOutputStream().write(response.getBytes());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public int getPort() {
@@ -91,6 +96,7 @@ public class HttpServer {
 
     public void setRoot(Path path) {
 
+        this.rootDirectory = rootDirectory;
     }
 }
 

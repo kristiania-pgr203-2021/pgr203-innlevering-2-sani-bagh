@@ -68,7 +68,7 @@ public class HttpServer {
 
 
             writeOkResponse(client, responseText, "text/html");
-        } else if (fileTarget.equals("/api/newPerson")) {
+        } else if (fileTarget.equals("/api/newProduct")) {
             Map<String, String> queryMap = parseRequestParameters(httpMessage.messageBody);
             Product product = new Product();
             product.setName(queryMap.get("name"));

@@ -132,7 +132,7 @@ public class HttpServer {
 
     public static void main(String[] args) throws IOException {
         HttpServer httpServer = new HttpServer(1962);
-        httpServer.setRoot(Paths.get("."));
+        httpServer.setRoot(Paths.get("Innlevering 2/src/main/resources/index.html"));
     }
 
 
@@ -144,6 +144,7 @@ public class HttpServer {
 
         this.rootDirectory = rootDirectory;
     }
+
 
     public void setCategory(List<String> category) {
         this.category = category;

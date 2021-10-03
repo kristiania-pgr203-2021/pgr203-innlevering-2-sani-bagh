@@ -42,11 +42,11 @@ public class HttpClient {
     }
 
     public String getHeader(String headerName) {
-        return HttpMessage.headerFields.get(headerName);
+        return httpMessage.headerFields.get(headerName);
     }
 
 
     public String getMessageBody() {
-        return HttpMessage.messageBody;
+        return httpMessage.messageBody;
     }
 }

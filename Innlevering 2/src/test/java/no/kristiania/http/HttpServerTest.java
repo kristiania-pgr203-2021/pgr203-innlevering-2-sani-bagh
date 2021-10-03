@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -83,6 +84,17 @@ public class HttpServerTest {
 
         HttpClient client = new HttpClient("localhost", server.getPort(), "/example-file.html");
         assertEquals("text/html", client.getHeader("Content-Type"));
+    }
+
+    @Test
+    void shouldReturnCategoryFromServer() throws IOException {
+        server.setCategory(List.of("Example 1", "Example 2"));
+
+        HttpClient client = new HttpClient("localhost", server.getPort(), "/api/categoryOptions");
+        assertEquals(
+                "<option value=1>Example 1</option><option value=2>Example 2</option>",
+                client.getMessageBody()
+        );
     }
 
 

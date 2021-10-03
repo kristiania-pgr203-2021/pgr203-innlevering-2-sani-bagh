@@ -5,13 +5,22 @@ public class Product {
     private String name;
     private String category;
 
+    public Product () {
+        this.name = name;
+    }
+
+    public Product(String name, String category) {
+        this.name =name;
+        this.category=category;
+    }
+
 
     public String getName() {
         return name;
     }
 
-    public void setName(String firstName) {
-        this.name = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCategory() {

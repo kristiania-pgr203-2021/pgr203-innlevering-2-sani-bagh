@@ -74,7 +74,17 @@ public class HttpServer {
             product.setName(queryMap.get("name"));
             products.add(product);
             writeOkResponse(client, "it is done", "text/html");
-        } else if (fileTarget.equals("/api/roleOptions")) {
+        } else if (fileTarget.equals("/api/products")) {
+            Product product = new Product("Example 1", "Example 1");
+            Product product2 = new Product("Example 2", "Example 2");
+            products.add(product);
+            products.add(product2);
+            for (Product p:
+                 products) {
+                String result = "Name: " + p.getName() + "Category: " + p.getCategory();
+                writeOkResponse(client, result, "text/html");
+            }
+        } else if (fileTarget.equals("/api/categoryOptions")) {
             String responseText = "";
 
             int value = 1;
@@ -103,6 +113,7 @@ public class HttpServer {
 
             String response = "HTTP/1.1 404 Not found\r\n" +
                     "Content-Length: " + responseText.length() + "\r\n" +
+                    "Connection: close\r\n" +
                     "\r\n" +
                     responseText;
             client.getOutputStream().write(response.getBytes());
@@ -132,6 +143,7 @@ public class HttpServer {
 
     public static void main(String[] args) throws IOException {
         HttpServer httpServer = new HttpServer(1962);
+        httpServer.setCategory(List.of("Example 1", "Example 2", "Example 3"));
         httpServer.setRoot(Paths.get("Innlevering 2/src/main/resources"));
     }
 
@@ -149,6 +161,8 @@ public class HttpServer {
     public void setCategory(List<String> category) {
         this.category = category;
     }
+
+
 
     public List<Product> getProducts() {
         return products;

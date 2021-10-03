@@ -6,11 +6,15 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HttpServer {
 
     private final ServerSocket serverSocket;
     private Path rootDirectory;
+    private List<String> category = new ArrayList<>();
+    private List<Product> product = new ArrayList<>();
 
     public HttpServer(int serverPort) throws IOException {
         //klassen brukes for å lage server
@@ -99,6 +103,14 @@ public class HttpServer {
     public void setRoot(Path rootDirectory) {
 
         this.rootDirectory = rootDirectory;
+    }
+
+    public void setCategory(List<String> category) {
+        this.category = category;
+    }
+
+    public List<Product> getProduct() {
+        return product;
     }
 
     public static void main(String[] args) throws IOException {

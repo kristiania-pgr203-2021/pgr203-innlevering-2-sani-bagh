@@ -11,7 +11,7 @@ public class HttpMessage {
     public static String messageBody;
 
     public HttpMessage(Socket socket) throws IOException {
-        startLine =HttpMessage.readLine(socket);
+        startLine = HttpMessage.readLine(socket);
         readHeaders(socket);
         messageBody = HttpMessage.readBytes(socket, getContentLength());
     }
@@ -36,7 +36,7 @@ public class HttpMessage {
     static String readBytes(Socket socket, int contentLength) throws IOException {
         StringBuilder buffer = new StringBuilder();
         for (int i = 0; i < contentLength; i++) {
-            buffer.append((char)socket.getInputStream().read());
+            buffer.append((char) socket.getInputStream().read());
         }
         return buffer.toString();
     }

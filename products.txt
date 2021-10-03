@@ -1,0 +1,4 @@
+Chair
+Laptop
+Bed
+TV

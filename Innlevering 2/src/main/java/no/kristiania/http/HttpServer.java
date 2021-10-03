@@ -1,15 +1,12 @@
 package no.kristiania.http;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class HttpServer {
 
@@ -73,17 +70,11 @@ public class HttpServer {
             Product product = new Product();
             product.setName(queryMap.get("name"));
             products.add(product);
+            writeProductsToFile(products);
             writeOkResponse(client, "it is done", "text/html");
         } else if (fileTarget.equals("/api/products")) {
-            Product product = new Product("Example 1", "Example 1");
-            Product product2 = new Product("Example 2", "Example 2");
-            products.add(product);
-            products.add(product2);
-            for (Product p:
-                 products) {
-                String result = "Name: " + p.getName() + "Category: " + p.getCategory();
-                writeOkResponse(client, result, "text/html");
-            }
+
+                writeOkResponse(client, readProductsFromFile(), "text/html");
         } else if (fileTarget.equals("/api/categoryOptions")) {
             String responseText = "";
 
@@ -118,6 +109,22 @@ public class HttpServer {
                     responseText;
             client.getOutputStream().write(response.getBytes());
         }
+    }
+
+    private void writeProductsToFile(List<Product> product) throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter("Innlevering 2/src/main/resources/products.txt", "UTF-8");
+        writer.println(product);
+        writer.close();
+    }
+
+    private String readProductsFromFile() throws FileNotFoundException {
+        File myFile = new File("Innlevering 2/src/main/resources/products.txt");
+        Scanner scanner = new Scanner(myFile);
+        String data = " ";
+        while (scanner.hasNextLine()) {
+            data = scanner.nextLine();
+        }
+        return data;
     }
 
     private Map<String, String> parseRequestParameters(String query) {

@@ -64,7 +64,7 @@ public class HttpServer {
                 Map<String, String> queryMap = parseRequestParameters(query);
                 allProducts = queryMap.get("productName");
             }
-            String responseText = "<li>Product: " + allProducts + "</li>";
+            String responseText = " ";
             for (Product product:
                     products) {
                 responseText += "<li>Product: " + product.getName() + "</li>";
@@ -160,7 +160,7 @@ public class HttpServer {
     }
 
     public static void main(String[] args) throws IOException {
-        HttpServer httpServer = new HttpServer(8080);
+        HttpServer httpServer = new HttpServer(1962);
         httpServer.setCategory(List.of("Hair", "Skin", "Vitamins"));
         httpServer.setRoot(Paths.get("./src/main/resources"));
     }

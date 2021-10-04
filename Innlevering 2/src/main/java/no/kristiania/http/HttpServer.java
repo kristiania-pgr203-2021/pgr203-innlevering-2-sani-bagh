@@ -36,6 +36,7 @@ public class HttpServer {
     private void handleClient() throws IOException {
         //setter sammen klient og server i en socket
         Socket client = serverSocket.accept();
+        System.out.println();
 
         HttpMessage httpMessage = new HttpMessage(client);
         String[] requestLine = httpMessage.startLine.split(" ");
@@ -149,7 +150,7 @@ public class HttpServer {
     }
 
     public static void main(String[] args) throws IOException {
-        HttpServer httpServer = new HttpServer(1962);
+        HttpServer httpServer = new HttpServer(8080);
         httpServer.setCategory(List.of("Example 1", "Example 2", "Example 3"));
         httpServer.setRoot(Paths.get("Innlevering 2/src/main/resources"));
     }

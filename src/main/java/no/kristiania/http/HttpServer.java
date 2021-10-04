@@ -19,7 +19,6 @@ public class HttpServer {
         //klassen brukes for å lage server
         serverSocket = new ServerSocket(serverPort);
         new Thread(this::handleClients).start();
-
     }
 
     private void handleClients() {
@@ -56,7 +55,7 @@ public class HttpServer {
         }
 
         if (fileTarget.equals("/api/products")) {
-            String allProducts = " ";
+            String allProducts = "hei";
             if (query != null) {
                 Map<String, String> queryMap = parseRequestParameters(query);
                 allProducts = queryMap.get("name");
@@ -134,25 +133,28 @@ public class HttpServer {
 
  */
 
+
     private Map<String, String> parseRequestParameters(String query) {
         Map<String, String> queryMap = new HashMap<>();
         for (String queryParameter : query.split("&")) {
             int equalsPos = queryParameter.indexOf('=');
             String parameterName = queryParameter.substring(0, equalsPos);
-            String parameterValue = queryParameter.substring(equalsPos + 1);
+            String parameterValue = queryParameter.substring(equalsPos+1);
             queryMap.put(parameterName, parameterValue);
         }
         return queryMap;
     }
 
-    private void writeOkResponse(Socket clientSocket, String responseText, String contentType) throws IOException {
+
+
+    private void writeOkResponse(Socket client, String responseText, String contentType) throws IOException {
         String response = "HTTP/1.1 200 OK\r\n" +
                 "Content-Length: " + responseText.length() + "\r\n" +
-                "Content-Type:" + contentType + "\r\n" +
+                "Content-Type: " + contentType + "\r\n" +
                 "Connection: close\r\n" +
                 "\r\n" +
                 responseText;
-        clientSocket.getOutputStream().write(response.getBytes());
+        client.getOutputStream().write(response.getBytes());
     }
 
     public static void main(String[] args) throws IOException {

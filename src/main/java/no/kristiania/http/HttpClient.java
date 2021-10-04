@@ -23,12 +23,12 @@ public class HttpClient {
         httpMessage = new HttpMessage(socket);
 
         //skal lese tilbake første linje i response headers
-        String[] statusLine = httpMessage.startLine.split(" ");//splitter opp status linjen
+        String[] statusLine = httpMessage.startLine.split(" "); //splitter opp status linjen
         this.statusCode = Integer.parseInt(statusLine[1]);//tar imot value under index 1 i status
 
     }
 
-
+/*
     public static void main(String[] args) throws IOException {
         HttpClient client = new HttpClient("httpbin.org", 80, "/html");
         System.out.println(client.getStatusCode());
@@ -36,6 +36,8 @@ public class HttpClient {
 
 
     }
+
+ */
 
     public int getStatusCode() {
         return statusCode;

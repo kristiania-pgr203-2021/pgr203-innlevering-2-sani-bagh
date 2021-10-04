@@ -58,13 +58,13 @@ public class HttpServer {
         }
 
         if (fileTarget.equals("/api/products")) {
-            String allProducts = " ";
+            String allProducts = "Shampoo";
 
             if (query != null) {
                 Map<String, String> queryMap = parseRequestParameters(query);
                 allProducts = queryMap.get("productName");
             }
-            String responseText = " ";
+            String responseText = "<li>Product: " + allProducts + "</li>";
             for (Product product:
                     products) {
                 responseText += "<li>Product: " + product.getName() + "</li>";

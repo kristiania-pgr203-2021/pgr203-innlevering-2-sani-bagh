@@ -39,7 +39,7 @@ public class HttpServerTest {
         assertAll(
                 () -> assertEquals(200, client.getStatusCode()),
                 () -> assertEquals("text/html", client.getHeader("Content-Type")),
-                () -> assertEquals("<li>Product:  </li>", client.getMessageBody())
+                () -> assertEquals("<li>Product: Shampoo</li>", client.getMessageBody())
         );
     }
 
@@ -55,9 +55,9 @@ public class HttpServerTest {
         HttpClient client = new HttpClient(
                 "localhost",
                 server.getPort(),
-                "/api/products?productName= "
+                "/api/products?productName=Cream"
         );
-        assertEquals("<li>Product: </li>", client.getMessageBody());
+        assertEquals("<li>Product: Cream</li>", client.getMessageBody());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class HttpServerTest {
 
         assertAll(
                 () -> assertEquals(200, client.getStatusCode()),
-                () -> assertEquals("<li>Product:  </li>", client.getMessageBody())
+                () -> assertEquals("<li>Product: Shampoo</li>", client.getMessageBody())
         );
     }
 

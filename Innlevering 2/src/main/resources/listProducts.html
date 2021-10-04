@@ -8,13 +8,13 @@
 <body>
     <main>
         <h1>List of existing products</h1>
-        <div id="productList">
+        <div id="productList" >
 
         </div>
     </main>
 </body>
 <script>
-    fetch("products.txt").then(function (res) {
+    fetch("/api/products").then(function (res) {
         return res.text()
     }).then(function (text) {
         document.querySelector("#productList").innerHTML = text;

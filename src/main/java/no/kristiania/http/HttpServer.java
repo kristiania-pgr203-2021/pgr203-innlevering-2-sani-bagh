@@ -59,7 +59,7 @@ public class HttpServer {
             String allProducts = " ";
             if (query != null) {
                 Map<String, String> queryMap = parseRequestParameters(query);
-                allProducts = queryMap.get("name");
+                allProducts = queryMap.get("productName");
             }
             String responseText = "<li>Product: " + allProducts + "</li>";
             for (Product product:
@@ -72,7 +72,7 @@ public class HttpServer {
         } else if (fileTarget.equals("/api/newProduct")) {
             Map<String, String> queryMap = parseRequestParameters(httpMessage.messageBody);
             Product product = new Product();
-            product.setName(queryMap.get("name"));
+            product.setName(queryMap.get("productName"));
             products.add(product);
           //  writeProductsToFile(products);
             writeOkResponse(client, "Product is stored", "text/html");

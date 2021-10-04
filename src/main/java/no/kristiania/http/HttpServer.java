@@ -115,7 +115,7 @@ public class HttpServer {
             client.getOutputStream().write(response.getBytes());
         }
     }
-
+/*
     private void writeProductsToFile(List<Product> product) throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter writer = new PrintWriter("Innlevering 2/src/main/resources/products.txt", "UTF-8");
         writer.println(product);
@@ -131,6 +131,8 @@ public class HttpServer {
         }
         return data;
     }
+
+ */
 
     private Map<String, String> parseRequestParameters(String query) {
         Map<String, String> queryMap = new HashMap<>();

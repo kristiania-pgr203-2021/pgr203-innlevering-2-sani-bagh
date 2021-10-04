@@ -34,20 +34,20 @@ public class HttpServerTest {
 
     @Test
     void shouldRespondWith200ForKnownRequestTarget() throws IOException {
-        HttpClient client = new HttpClient("localhost", server.getPort(), "/hello");
+        HttpClient client = new HttpClient("localhost", server.getPort(), "/api/products");
 
         assertAll(
                 () -> assertEquals(200, client.getStatusCode()),
                 () -> assertEquals("text/html", client.getHeader("Content-Type")),
-                () -> assertEquals("<p>Hello world</p>", client.getMessageBody())
+                () -> assertEquals("<li>Product: hei</li>", client.getMessageBody())
         );
     }
 
     @Test
     void shouldHandleMoreThanOneRequest() throws IOException {
 
-        assertEquals(200, new HttpClient("localhost", server.getPort(), "/hello").getStatusCode());
-        assertEquals(200, new HttpClient("localhost", server.getPort(), "/hello").getStatusCode());
+        assertEquals(200, new HttpClient("localhost", server.getPort(), "/api/products").getStatusCode());
+        assertEquals(200, new HttpClient("localhost", server.getPort(), "/api/products").getStatusCode());
     }
 
     @Test

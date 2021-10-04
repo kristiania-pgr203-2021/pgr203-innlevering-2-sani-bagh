@@ -107,6 +107,20 @@ public class HttpServerTest {
         );
     }
 
+    @Test
+    void createsNewProduct() throws IOException {
+        HttpPostClient postClient = new HttpPostClient(
+                "localhost",
+                server.getPort(),
+                "/api/newProduct",
+                "productName=Shampoo"
+        );
+        assertEquals(200, postClient.getStatusCode());
+        Product product = server.getProducts().get(0);
+        //setter mellomrom fordi default er mellomrom
+        assertEquals("Shampoo", product.getName());
+    }
+
 
 
 }

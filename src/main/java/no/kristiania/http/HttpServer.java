@@ -1,12 +1,15 @@
 package no.kristiania.http;
 
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class HttpServer {
 
@@ -35,7 +38,7 @@ public class HttpServer {
     private void handleClient() throws IOException {
         //setter sammen klient og server i en socket
         Socket client = serverSocket.accept();
-        System.out.println();
+
 
         HttpMessage httpMessage = new HttpMessage(client);
         String[] requestLine = httpMessage.startLine.split(" ");
@@ -55,7 +58,8 @@ public class HttpServer {
         }
 
         if (fileTarget.equals("/api/products")) {
-            String allProducts = "hei";
+            String allProducts = " ";
+
             if (query != null) {
                 Map<String, String> queryMap = parseRequestParameters(query);
                 allProducts = queryMap.get("productName");
@@ -73,10 +77,8 @@ public class HttpServer {
             Product product = new Product();
             product.setName(queryMap.get("productName"));
             products.add(product);
-          //  writeProductsToFile(products);
+
             writeOkResponse(client, "Product is stored", "text/html");
-
-
 
 
         } else if (fileTarget.equals("/api/categoryOptions")) {
@@ -159,7 +161,7 @@ public class HttpServer {
 
     public static void main(String[] args) throws IOException {
         HttpServer httpServer = new HttpServer(8080);
-        httpServer.setCategory(List.of("Example 1", "Example 2", "Example 3"));
+        httpServer.setCategory(List.of("Hair", "Skin", "Vitamins"));
         httpServer.setRoot(Paths.get("./src/main/resources"));
     }
 

@@ -39,7 +39,7 @@ public class HttpServerTest {
         assertAll(
                 () -> assertEquals(200, client.getStatusCode()),
                 () -> assertEquals("text/html", client.getHeader("Content-Type")),
-                () -> assertEquals("<li>Product: hei</li>", client.getMessageBody())
+                () -> assertEquals("<li>Product:  </li>", client.getMessageBody())
         );
     }
 
@@ -55,19 +55,19 @@ public class HttpServerTest {
         HttpClient client = new HttpClient(
                 "localhost",
                 server.getPort(),
-                "/hello?name=Test"
+                "/api/products?productName= "
         );
-        assertEquals("<p>Hello Test</p>", client.getMessageBody());
+        assertEquals("<li>Product: </li>", client.getMessageBody());
     }
 
     @Test
     void shouldReturnContentType() throws IOException {
 
-        HttpClient client = new HttpClient("localhost", server.getPort(), "/hello");
+        HttpClient client = new HttpClient("localhost", server.getPort(), "/api/products");
 
         assertAll(
                 () -> assertEquals(200, client.getStatusCode()),
-                () -> assertEquals("<p>Hello world</p>", client.getMessageBody())
+                () -> assertEquals("<li>Product:  </li>", client.getMessageBody())
         );
     }
 
@@ -98,11 +98,11 @@ public class HttpServerTest {
 
     @Test
     void shouldReturnCategoryFromServer() throws IOException {
-        server.setCategory(List.of("Example 1", "Example 2"));
+        server.setCategory(List.of("Hair", "Skin", "Vitamins"));
 
         HttpClient client = new HttpClient("localhost", server.getPort(), "/api/categoryOptions");
         assertEquals(
-                "<option value=1>Example 1</option><option value=2>Example 2</option>",
+                "<option value=1>Hair</option><option value=2>Skin</option><option value=3>Vitamins</option>",
                 client.getMessageBody()
         );
     }

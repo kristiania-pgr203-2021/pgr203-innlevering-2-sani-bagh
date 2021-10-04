@@ -55,14 +55,17 @@ public class HttpServer {
             fileTarget = requestTarget;
         }
 
-        if (fileTarget.equals("/hello")) {
-            String yourName = "world";
+        if (fileTarget.equals("/products")) {
+            String allProducts = " ";
             if (query != null) {
-
                 Map<String, String> queryMap = parseRequestParameters(query);
-                yourName = queryMap.get("name");
+                allProducts = queryMap.get("name");
             }
-            String responseText = "<p>Hello " + yourName + "</p>";
+            String responseText = "<li>Product: " + allProducts + "</li>";
+            for (Product product:
+                    products) {
+                responseText += "<li>Product: " + product.getName() + "</li>";
+            }
 
 
             writeOkResponse(client, responseText, "text/html");
@@ -71,11 +74,12 @@ public class HttpServer {
             Product product = new Product();
             product.setName(queryMap.get("name"));
             products.add(product);
-            writeProductsToFile(products);
-            writeOkResponse(client, "it is done", "text/html");
-        } else if (fileTarget.equals("/api/products")) {
+          //  writeProductsToFile(products);
+            writeOkResponse(client, "Product is stored", "text/html");
 
-                writeOkResponse(client, readProductsFromFile(), "text/html");
+
+
+
         } else if (fileTarget.equals("/api/categoryOptions")) {
             String responseText = "";
 

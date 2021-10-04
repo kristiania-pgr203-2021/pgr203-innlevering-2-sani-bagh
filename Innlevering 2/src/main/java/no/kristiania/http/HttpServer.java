@@ -150,7 +150,7 @@ public class HttpServer {
     }
 
     public static void main(String[] args) throws IOException {
-        HttpServer httpServer = new HttpServer(8080);
+        HttpServer httpServer = new HttpServer(1962);
         httpServer.setCategory(List.of("Example 1", "Example 2", "Example 3"));
         httpServer.setRoot(Paths.get("Innlevering 2/src/main/resources"));
     }

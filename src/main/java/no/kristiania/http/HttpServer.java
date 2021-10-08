@@ -65,7 +65,7 @@ public class HttpServer {
                 allProducts = queryMap.get("productName");
             }
             String responseText = "<li>Product: " + allProducts + "</li>";
-            for (Product product:
+            for (Product product :
                     products) {
                 responseText += "<li>Product: " + product.getName() + "</li>";
             }
@@ -141,12 +141,11 @@ public class HttpServer {
         for (String queryParameter : query.split("&")) {
             int equalsPos = queryParameter.indexOf('=');
             String parameterName = queryParameter.substring(0, equalsPos);
-            String parameterValue = queryParameter.substring(equalsPos+1);
+            String parameterValue = queryParameter.substring(equalsPos + 1);
             queryMap.put(parameterName, parameterValue);
         }
         return queryMap;
     }
-
 
 
     private void writeOkResponse(Socket client, String responseText, String contentType) throws IOException {
@@ -179,7 +178,6 @@ public class HttpServer {
     public void setCategory(List<String> category) {
         this.category = category;
     }
-
 
 
     public List<Product> getProducts() {

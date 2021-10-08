@@ -3,9 +3,9 @@ package no.kristiania.http;
 public class Product {
 
     private String name;
-   // private String category;
+    // private String category;
 
-    public Product () {
+    public Product() {
         this.name = name;
     }
 

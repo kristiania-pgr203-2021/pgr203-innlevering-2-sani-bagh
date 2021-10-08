@@ -29,7 +29,7 @@ public class HttpMessage {
     static String readBytes(Socket socket, int contentLength) throws IOException {
         StringBuilder buffer = new StringBuilder();
         for (int i = 0; i < contentLength; i++) {
-            buffer.append((char)socket.getInputStream().read());
+            buffer.append((char) socket.getInputStream().read());
         }
         return buffer.toString();
     }
@@ -39,7 +39,7 @@ public class HttpMessage {
         while (!(headerLine = HttpMessage.readLine(socket)).isBlank()) {
             int colonPos = headerLine.indexOf(':');
             String headerField = headerLine.substring(0, colonPos);
-            String headerValue = headerLine.substring(colonPos+1).trim();
+            String headerValue = headerLine.substring(colonPos + 1).trim();
             headerFields.put(headerField, headerValue);
         }
     }
@@ -48,7 +48,7 @@ public class HttpMessage {
         StringBuilder buffer = new StringBuilder();
         int c;
         while ((c = socket.getInputStream().read()) != '\r') {
-            buffer.append((char)c);
+            buffer.append((char) c);
         }
         int expectedNewline = socket.getInputStream().read();
         assert expectedNewline == '\n';

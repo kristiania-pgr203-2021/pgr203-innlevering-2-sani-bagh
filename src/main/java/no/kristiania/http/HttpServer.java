@@ -122,7 +122,6 @@ public class HttpServer {
         writer.println(product);
         writer.close();
     }
-
     private String readProductsFromFile() throws FileNotFoundException {
         File myFile = new File("Innlevering 2/src/main/resources/products.txt");
         Scanner scanner = new Scanner(myFile);
@@ -132,7 +131,6 @@ public class HttpServer {
         }
         return data;
     }
-
  */
 
 
@@ -184,9 +182,7 @@ public class HttpServer {
         return products;
     }
 
-
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }
-
-
-
-

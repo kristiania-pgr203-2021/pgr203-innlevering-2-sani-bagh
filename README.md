@@ -1,3 +1,6 @@
+[![Java CI with Maven](https://github.com/kristiania-pgr203-2021/pgr203-innlevering-2-sani-bagh/actions/workflows/maven.yml/badge.svg?branch=main)](https://github.com/kristiania-pgr203-2021/pgr203-innlevering-2-sani-bagh/actions/workflows/maven.yml)
+
+
 # Innlevering 2: Http server
 
 ## Oppgave
